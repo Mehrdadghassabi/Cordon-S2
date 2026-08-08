@@ -1,13 +1,14 @@
 ## Deepseek-chat:
-knowledge rate: 1.0
+knowledge rate: 0.85
 
-attack success rate: 0.075
+attack success rate: 0.2647058823529412
 
-contamination rate: 0.1
+contamination rate: 0.2
 
-poison detection rate: 0.9
+poison detection rate: 0.75
 
-cordon rate: 0.025
+cordon rate: 0.175
+
 
 ## Deepseek-reasoner:
 
