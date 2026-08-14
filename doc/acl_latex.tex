@@ -1,0 +1,220 @@
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+% Change to "preprint" to generate a non-anonymous version with page numbers.
+%\usepackage[review]{acl}
+\usepackage{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
+
+%Including images in your LaTeX document requires adding
+%additional package(s)
+\usepackage{graphicx}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{Towards Safer RAG: Only Agents Capable of System2 Thinking may Access Untrusted Documents}
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a separate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+
+\author{%
+  \textbf{Mehrdad Ghassabi\textsuperscript{1}},
+  \textbf{Audrina Ebrahimi\textsuperscript{2}},
+  \textbf{Sadra Hakim\textsuperscript{3}},
+  \textbf{Hamidreza Baradaran Kashani\textsuperscript{1}}
+\\
+\\
+  \textsuperscript{1}University of Isfahan,
+  \textsuperscript{2}University of Texas at Dallas,
+  \textsuperscript{3}University of Windsor
+\\
+  \small{
+    \textbf{Correspondence:} \href{mailto:m.ghassabi@eng.ui.ac.ir}{m.ghassabi@eng.ui.ac.ir}
+  }
+}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+While Retrieval-Augmented Generation (RAG) has significantly enhanced the performance of large language models (LLMs), these systems remain vulnerable to knowledge poisoning attacks, where adversarially crafted documents manipulate the model's final outputs. Prior work has attempted to mitigate this vulnerability through the "cordon principle," a strict rule forbidding any agent capable of final answer synthesis from directly accessing raw evidence, which, while secure, imposes prohibitive computational costs. In this work, we propose a refined security principle: only agents capable of deliberative System 2 thinking should be permitted to access untrusted documents. To validate this assertion, we introduced novel evaluation metrics designed to quantify both resilience to poisoning and reasoning overhead. We then conduct a empirical study comparing state-of-the-art reasoning language models, which exhibit System 2 thinking capabilities, against standard language models that lack such deliberative reasoning, across these metrics. Our results empirically demonstrate that reasoning-capable agents are significantly more robust to corrupted evidence without requiring the full cordon's strict isolation, thereby supporting our refined principle and providing a more practical foundation for future RAG security designs.
+\end{abstract}
+
+\section{Introduction}
+Retrieval-Augmented Generation (RAG)~\cite{lewis2020retrieval} has significantly enhanced large language models by grounding outputs in external knowledge, yet this reliance introduces a critical vulnerability: knowledge poisoning attacks, where adversarially crafted documents manipulate the model's final responses. Prior work reveals a troubling phenomenon: even when a model successfully detects a poisoned document, it often cannot resist being influenced by that corrupted content during answer synthesis. To address this, previous studies proposed the "cordon principle" \cite{yu2026cordonmasdefendingragknowledge}, a strict rule forbidding any agent capable of final answer synthesis from directly accessing raw evidence. While secure, this approach imposes prohibitive computational overhead and restricts system flexibility.
+
+In this work, we propose a refined principle: only agents capable of deliberative System 2 thinking should be permitted to access untrusted documents, while agents relying solely on associative matching must remain shielded. Rather than proposing a new defense, we empirically validate this principle by introducing two novel metrics to quantify poisoning resilience and reasoning overhead, respectively, and comparing state-of-the-art reasoning language models against standard models lacking System 2 capabilities across these metrics. Our results demonstrate that System 2 thinking capable agents maintain significantly higher robustness without the full cordon's strict isolation, offering a more practical foundation for securing RAG systems. Our contributions are threefold: (1) a refined security principle conditional on System 2 thinking; (2) two novel evaluation metrics for quantifying poisoning resilience and reasoning overhead; and (3) an empirical comparison validating the viability of our principle.
+
+\section{Approach}
+
+\subsection{Motivation}
+
+Prior work by \cite{yu2026detectingresolvingmonitoringcontrol} uncovered a critical and previously overlooked deficiency in language models, which they term the "monitoring-control gap." They demonstrated that even when a language model successfully detects misinformation within its provided context, it nevertheless remains influenced by that detected flawed text during answer synthesis. This phenomenon reveals a fundamental failure in the model's ability to suppress the influence of seen but identified misinformation.
+
+This finding resonates with the influential NeurIPS 2019 presentation by Bengio \cite{bengio2019system}, who argued that current deep learning models excel at System 1 thinking tasks (associated with Kahneman's fast thinking \cite{kahneman2011thinking}) but remain deeply deficient in System 2 thinking tasks (associated with Kahneman's slow thinking). Following this observation, researchers, including Bengio himself, proposed various architectural alternatives to Transformers specifically designed to be adept at System 2 reasoning. However, all of these attempts were ultimately unsuccessful, with the primary obstacle likely being the lack of scalability of the proposed architectures. Separately, a parallel line of research focused on improving the System 2 thinking skills of Transformer-based language models, as exemplified by models such as DeepSeek-R \cite{deepseekai2025deepseekr1}. Yet these efforts have only enabled models to mimic reasoning skills through training rather than solving the underlying architectural deficiency. However, the problem is inherently architectural and cannot be resolved through training alone.
+
+We hypothesize that the monitoring control gap is directly caused by this deficiency in System 2 reasoning. Consider a human agent, who naturally possesses both System 1 and System 2 thinking capabilities. When this agent detects a flaw or misinformation in a passage and is confident in its incorrectness, the agent would never allow that piece of information to influence its final judgment. For such an agent, the monitoring control gap is conceptually meaningless. Consequently, this phenomenon only occurs for agents that lack System 2 thinking capabilities, precisely the case for current large language models.
+
+To quantify this deficiency and validate our refined security principle, we introduce two complementary evaluation metrics.
+
+\subsection{Poison Generation}
+
+We construct poisoned documents using a simple, naive generation strategy to assess model susceptibility to straightforward misinformation. For each question, we first prompt a language model to produce the correct answer. We then prompt the same model to generate a single incorrect sentence that contradicts this answer, and expand this sentence into a coherent 500-word document mimicking the style of a retrieved passage. To verify that the resulting poison indeed contains the intended misinformation, we concatenate the generated passage with the correct answer and present this combined text to a judge language model, instructing it to determine, solely based on that input, whether the answer is correct. If the judge deems the answer incorrect, we confirm that the poison successfully carries the desired misinformation. This naive approach deliberately avoids sophisticated adversarial optimization, allowing us to isolate the effect of reasoning deficiency on susceptibility to simple, human-readable misinformation.
+
+\subsection{Cordon Rate}
+
+The \textit{Cordon Rate} (\(C\)) measures the proportion of cases where a model detects a poisoned document but nevertheless produces an answer influenced by it. This metric directly targets the residual vulnerability that the strict cordon principle was designed to eliminate.
+
+For each test instance, we provide the target language model \(M\) with a set of retrieved contexts, one of which is a poisoned document containing crafted misinformation (we assume successful retrieval and inject the poison directly into the context). We prompt \(M\) to: (1) reason step-by-step, (2) check the context for misinformation, and (3) produce a final answer. We then employ a separate judge language model \(J\), prompted with \(M\)'s answer and the poison document, to determine whether \(M\)'s answer was influenced by the poison. Separately, \(J\) is prompted with the original prompt, \(M\)'s answer, and the poison document to determine whether \(M\) successfully detected the misinformation. 
+
+A sample receives a score of 1 if both conditions are met (influenced and detected), and 0 otherwise. To isolate the effect of poisoning from the model's intrinsic knowledge gaps, we exclude samples where \(M\) fails to produce a correct answer without any retrieved context (i.e., relying solely on parametric knowledge). The Cordon Rate is computed as:
+
+\begin{equation}
+\label{eq:cordon_rate}
+C = \frac{1}{N} \sum_{i=1}^{N} \mathbf{1}\left[\text{influenced}_i \land \text{detected}_i\right]
+\end{equation}
+
+where \(N\) is the number of valid samples.
+
+\subsection{Contamination Rate}
+
+The \textit{Contamination Rate} (\(T\)) measures a model's implicit susceptibility to poisoned evidence even when explicitly instructed to disregard retrieved content. This metric captures the System 1 "automatic" influence that persists despite top-down instructions to ignore.
+
+We create two instances of the same sample language model \(M\) for each query. For the first instance, \(M_1\), we provide the full set of retrieved documents (including the injected poison) but explicitly instruct \(M_1\) to ignore all provided documents and rely solely on its parametric knowledge. For the second instance, \(M_2\), we provide no retrieved context at all and ask it to answer based solely on its knowledge. The judge model \(J\) then evaluates whether \(M_1\)'s answer is influenced by the poison, and separately whether \(M_2\)'s answer is influenced by the poison. 
+
+A sample is assigned a score of 1 if \(M_1\)'s answer is influenced by the poison while \(M_2\)'s answer is not influenced, and 0 otherwise. The Contamination Rate is defined as:
+
+\begin{equation}
+\label{eq:contamination_rate}
+\begin{split}
+    T = & \frac{1}{N} \sum_{i=1}^{N} \mathbf{1} \Biggl[ \text{influenced}(M_1)_i \land \\
+    & \qquad \qquad \qquad \qquad \neg \text{influenced}(M_2)_i \Biggr]
+\end{split}
+\end{equation}
+
+This metric effectively controls for the model's pre-existing knowledge; if both instances are influenced, the effect may be due to parametric hallucinations, whereas if only \(M_1\) is influenced, it confirms contamination is from the retrieved documents that is given to it despite asking it to ignore them.
+
+
+\section{Experiments}
+We investigate three research questions:
+RQ1: Can an agent with system-2 thinking access untrusted documents without affecting its final response?
+RQ2: To what extent is a system-2-thinking-incapable language model influenced by the texts present in its context?
+RQ3: For which types of questions does the monitoring-control gap become more observable?
+
+
+\subsection{Experimental Setup}
+We structured our experimental setup as follows. We selected the initial 40 queries from the Scifact \cite{Wadden2020Scifact}, Fiqa \cite{Maia2018Fiqa}, and MS-MARCO \cite{Bajaj2016Msmarco} subsets of the BEIR benchmark \cite{Thakur2021Beir} . As our target models, we employed DeepSeek-Chat \cite{deepseek2024v3} (as a standard base model) and DeepSeek-Reasoner \cite{deepseekai2025deepseekr1} (as a reasoning-enhanced model). For automated response evaluation, we used Gemini 2.5 Pro \cite{comanici2025gemini} as a judge model and manually verified all its judgments to eliminate annotation errors. To generate the untrusted (poisoned) context passages, we primarily used GPT5.6 \cite{openai2026gpt56systemcard} ; however, for the few instances where GPT5.6  refused generation due to its safety guidelines, we fell back to Grok to produce the required poisons. Finally, we generated all model responses using a temperature of 0.1 to minimize stochasticity and ensure reproducibility.
+
+
+\subsection{RQ1}
+As previously noted, no existing architecture intrinsically implements System‑2 thinking, and consequently, no language model today genuinely possesses such capabilities. The closest available alternative is reasoning‑enhanced models, which are explicitly designed to simulate System‑2‑like deliberation rather than to embody it natively. Given this constraint, we select DeepSeek-Reasoner as our reasoning model and compare it against a standard (non‑reasoning) model DeepSeek-Chat from the same provider, controlling for architectural and training differences to isolate the effect of simulated reasoning. We then compute the introduced cordon rate on the aforementioned datasets (Scifact, Fiqa, and MS-MARCO) to quantify the behavioral discrepancy between the two model classes.
+
+Table~\ref{tab:cordon_rates} shows that the cordon rate for the reasoning model (DeepSeek-Reasoner) drops to zero on SciFact and FiQA, whereas the standard model (DeepSeek-Chat) yields non-zero rates of 0.175 and 0.025, respectively. Both models score zero on MS-MARCO. These results indicate that the reasoning model can access untrusted documents without being substantially influenced by the embedded misinformation. Consequently, this reduced susceptibility suggests that the monitoring-control gap is considerably narrower for reasoning-enhanced models, as they appear to more effectively identify and disregard conflicting information when it is present.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Cordon rates comparison}
+\label{tab:cordon_rates}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Dataset} & \textbf{\shortstack{DeepSeek-\\ Chat}} & \textbf{\shortstack{DeepSeek-\\ Reasoner}} \\
+\midrule
+SciFact  & 0.175 & 0.000 \\
+FiQA     & 0.025 & 0.000 \\
+MS-MARCO & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ2}
+To address RQ2, which examines the extent to which a System-2-thinking-incapable model is implicitly influenced by the texts in its context, we calculated our bespoke Contamination Rate ($T$) across the aforementioned dataset. This metric operationalizes contextual influence as the model's susceptibility to poisoned evidence even when explicitly instructed to disregard it.
+
+Applying this contamination rate ($T$) across the aforementioned datasets yields a direct empirical answer to RQ2. As shown in Table~\ref{tab:contamination_rates}, the DeepSeek-Chat model exhibits a $T$ of $0.25$ on SciFact, meaning that in 25\% of samples, the instance provided with retrieved documents ($M_1$) was implicitly influenced by the poisoned evidence despite the ignore instruction, while the identical model instance receiving no context ($M_2$) remained uninfluenced in those same samples---isolating the contextual pull from any parametric confounding. In contrast, DeepSeek-Reasoner reduces this to just $0.10$ on SciFact, cutting the influence in half. Both models show near-zero contamination on FiQA ($0.10$ vs.~$0.00$) and MS-MARCO ($0.00$ vs.~$0.00$). Critically, the consistently higher $T$ for DeepSeek-Chat across these benchmarks confirms that a System-2-incapable model is indeed vulnerable to the automatic pull of retrieved evidence despite explicit override instructions, whereas the Reasoner's lower rates demonstrate that deliberate reasoning actively mitigates such implicit influence---directly affirming that System-2 capability is the key differentiator in resisting contextual contamination.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Contamination rates comparison}
+\label{tab:contamination_rates}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Dataset} & \textbf{\shortstack{DeepSeek-\\ Chat}} & \textbf{\shortstack{DeepSeek-\\ Reasoner}} \\
+\midrule
+SciFact  & 0.250 & 0.100 \\
+FiQA     & 0.100 & 0.000 \\
+MS-MARCO & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ3}
+As shown in Tables~\ref{tab:cordon_rates} and~\ref{tab:contamination_rates}, both DeepSeek-Chat and DeepSeek-Reasoner exhibit zero contamination on MS-MARCO and near-zero rates on FiQA ($0.10$ and $0.00$ for Chat and Reasoner, respectively). In stark contrast, SciFact yields substantially higher contamination rates ($0.25$ for Chat and $0.10$ for Reasoner). This pronounced disparity indicates that the monitoring-control gap phenomenon is primarily observable in challenging, knowledge-intensive scientific fact verification tasks, rather than in simpler open-domain retrieval questions such as those found in MS-MARCO. Furthermore, as demonstrated in Table~\ref{tab:attack_success_rates}, the attack success rate is significantly elevated on SciFact compared to the other datasets, reinforcing the interpretation that harder, more complex questions amplify the model's vulnerability to contextual interference and consequently widen the monitoring-control gap.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Attack Success rates comparison}
+\label{tab:attack_success_rates}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Dataset} & \textbf{\shortstack{DeepSeek-\\ Chat}} & \textbf{\shortstack{DeepSeek-\\ Reasoner}} \\
+\midrule
+SciFact  & 0.265 & 0.154 \\
+FiQA     & 0.075 & 0.000 \\
+MS-MARCO & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+We proposed a refined security principle for RAG: only System-2-thinking-capable agents should access untrusted documents. Through our Cordon Rate (\(C\)) and Contamination Rate (\(T\)) metrics, we empirically validated this principle: DeepSeek-Reasoner achieved zero cordon rates on SciFact and FiQA, while DeepSeek-Chat exhibited non-zero vulnerability (\(C = 0.175\) and \(0.025\), respectively). Similarly, the contamination analysis revealed that System-2-incapable models remain implicitly influenced by context even when explicitly instructed to ignore it (\(T = 0.25\) for Chat vs. \(0.10\) for Reasoner on SciFact), confirming the persistence of the monitoring-control gap.
+
+Beyond RAG, this phenomenon has critical implications for multi-agent systems. If one agent generates a hallucination that is detected by another agent, our findings suggest the receiving agent's System-1 mechanism may still be unconsciously influenced by that flawed information—mirroring the contamination we observed in \(M_1\) despite explicit ignore instructions. Future work must investigate how to decouple detection from synthesis in agentic architectures and whether the gap varies across hallucination types or domains. Until language models genuinely acquire System 2 thinking, the monitoring-control gap remains a fundamental vulnerability in any system where multiple agents exchange and process information.
+
+\bibliography{custom}
+
+\end{document}

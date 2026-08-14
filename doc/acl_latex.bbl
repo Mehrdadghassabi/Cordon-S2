@@ -1,0 +1,110 @@
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Bajaj et~al.(2016)Bajaj, Campos, Craswell, Deng, Gao, Liu, Majumder,
+  McNamara, Mitra, Nguyen, Rosenberg, Song, Stoica, Tiwary, and
+  Wang}]{Bajaj2016Msmarco}
+Payal Bajaj, Daniel Campos, Nick Craswell, Li~Deng, Jianfeng Gao, Xiaodong Liu,
+  Rangan Majumder, Andrew McNamara, Bhaskar Mitra, Tri Nguyen, Mir Rosenberg,
+  Xia Song, Alina Stoica, Saurabh Tiwary, and Tong Wang. 2016.
+\newblock Ms marco: A human generated machine reading comprehension dataset.
+\newblock In \emph{Proceedings of the 30th Conference on Neural Information
+  Processing Systems (NIPS) Workshop on InCoCo}, Barcelona, Spain.
+
+\bibitem[{Bengio(2019)}]{bengio2019system}
+Yoshua Bengio. 2019.
+\newblock \href {https://neurips.cc/virtual/2019/invited-talk/15488} {From
+  system 1 deep learning to system 2 deep learning}.
+\newblock In \emph{NeurIPS 2019 Invited Talk (Posner Lecture)}, Vancouver,
+  Canada.
+
+\bibitem[{Comanici et~al.(2025)Comanici, Bieber, Schaekermann, Pasupat,
+  Sachdeva, Dhillon, {Gemini Team} et~al.}]{comanici2025gemini}
+Gheorghe Comanici, Eric Bieber, Mike Schaekermann, Ipsita Pasupat, Neil
+  Sachdeva, Inderjit Dhillon, {Gemini Team}, et~al. 2025.
+\newblock \href {https://arxiv.org/abs/2507.06261} {Gemini 2.5: Pushing the
+  frontier with advanced reasoning, multimodality, long context, and next
+  generation agentic capabilities}.
+\newblock \emph{arXiv preprint arXiv:2507.06261}.
+
+\bibitem[{DeepSeek-AI(2024)}]{deepseek2024v3}
+DeepSeek-AI. 2024.
+\newblock \href {https://arxiv.org/abs/2412.19437} {Deepseek-v3 technical
+  report}.
+\newblock \emph{arXiv preprint arXiv:2412.19437}.
+
+\bibitem[{DeepSeek-AI(2025)}]{deepseekai2025deepseekr1}
+DeepSeek-AI. 2025.
+\newblock \href {https://huggingface.co/deepseek-ai/DeepSeek-R1} {Deepseek-r1:
+  Incentivizing reasoning capability in llms via reinforcement learning}.
+\newblock Hugging Face Repository.
+
+\bibitem[{Kahneman(2011)}]{kahneman2011thinking}
+Daniel Kahneman. 2011.
+\newblock \emph{Thinking, Fast and Slow}.
+\newblock Farrar, Straus and Giroux, New York.
+
+\bibitem[{Lewis et~al.(2020)Lewis, Perez, Piktus, Petroni, Karpukhin, Goyal,
+  K{\"u}ttler, Lewis, Yih, Rockt{\"a}schel, Riedel, and
+  Kiela}]{lewis2020retrieval}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir
+  Karpukhin, Naman Goyal, Heinrich K{\"u}ttler, Mike Lewis, Wen-tau Yih, Tim
+  Rockt{\"a}schel, Sebastian Riedel, and Douwe Kiela. 2020.
+\newblock \href
+  {https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html}
+  {Retrieval-augmented generation for knowledge-intensive {NLP} tasks}.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, volume~33, pages 9459--9474. Curran Associates, Inc.
+\newblock Also available at arXiv:2005.11401.
+
+\bibitem[{Maia et~al.(2018)Maia, Handschuh, Freitas, Davis, McDermott, Zarrouk,
+  and Balahur}]{Maia2018Fiqa}
+Macedo Maia, Siegfried Handschuh, Andr{\'e} Freitas, Brian Davis, Ross
+  McDermott, Manel Zarrouk, and Alexandra Balahur. 2018.
+\newblock \href {https://doi.org/10.1145/3184558.3192301} {Www'18 open
+  challenge: Financial opinion mining and question answering}.
+\newblock In \emph{Companion Proceedings of the The Web Conference 2018 (WWW
+  '18)}, pages 1939--1940, Lyon, France. ACM.
+
+\bibitem[{{OpenAI}(2026)}]{openai2026gpt56systemcard}
+{OpenAI}. 2026.
+\newblock \href {https://deploymentsafety.openai.com/gpt-5-6} {Gpt-5.6 system
+  card}.
+\newblock OpenAI Deployment Safety Hub.
+\newblock Accessed: [Insert your access date].
+
+\bibitem[{Thakur et~al.(2021)Thakur, Reimers, R{\"u}ckl{\'e}, Srivastava, and
+  Gurevych}]{Thakur2021Beir}
+Nandan Thakur, Nils Reimers, Andreas R{\"u}ckl{\'e}, Abhishek Srivastava, and
+  Iryna Gurevych. 2021.
+\newblock \href {https://arxiv.org/abs/2104.08663} {Beir: A heterogenous
+  benchmark for zero-shot evaluation of information retrieval models}.
+\newblock \emph{arXiv preprint arXiv:2104.08663}.
+
+\bibitem[{Wadden et~al.(2020)Wadden, Lin, Lo, Wang, van Zuylen, Cohan, and
+  Hajishirzi}]{Wadden2020Scifact}
+David Wadden, Shanchuan Lin, Kyle Lo, Lucy~Lu Wang, Madeleine van Zuylen, Arman
+  Cohan, and Hannaneh Hajishirzi. 2020.
+\newblock \href {https://doi.org/10.18653/v1/2020.emnlp-main.609} {Fact or
+  fiction: Verifying scientific claims}.
+\newblock In \emph{Proceedings of the 2020 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, pages 7534--7550, Online. Association
+  for Computational Linguistics.
+
+\bibitem[{Yu et~al.(2026{\natexlab{a}})Yu, Xing, Li, Xiong, Wang, Teng, and
+  Han}]{yu2026cordonmasdefendingragknowledge}
+Zhe Yu, Wenpeng Xing, Gaolei Li, Shuguang Xiong, Hongzhi Wang, Xuyang Teng, and
+  Meng Han. 2026{\natexlab{a}}.
+\newblock \href {https://arxiv.org/abs/2605.26754} {Cordon-mas: Defending rag
+  against knowledge poisoning via information-flow control}.
+\newblock \emph{Preprint}, arXiv:2605.26754.
+
+\bibitem[{Yu et~al.(2026{\natexlab{b}})Yu, Xing, Ye, Teng, Yang, Lin, and
+  Han}]{yu2026detectingresolvingmonitoringcontrol}
+Zhe Yu, Wenpeng Xing, Chen Ye, Xuyang Teng, Bo~Yang, Changting Lin, and Meng
+  Han. 2026{\natexlab{b}}.
+\newblock \href {https://arxiv.org/abs/2605.27157} {Detecting is not resolving:
+  The monitoring control gap in retrieval augmented llms}.
+\newblock \emph{Preprint}, arXiv:2605.27157.
+
+\end{thebibliography}
