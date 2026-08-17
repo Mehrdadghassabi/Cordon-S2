@@ -2,7 +2,7 @@
 
 ## Only Agents Capable of System 2 Thinking May Access Untrusted Documents
 
-This repository contains the research materials for the paper **"Towards Safer RAG: Only Agents Capable of System 2 Thinking May Access Untrusted Documents"** by **Mehrdad Ghassabi** (University of Isfahan).
+This repository contains the research materials for the paper **"Towards Safer RAG: Only Agents Capable of System 2 Thinking May Access Untrusted Documents"**
 
 ## Overview
 
