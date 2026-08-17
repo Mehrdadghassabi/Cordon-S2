@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.11.5)  17 AUG 2026 04:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2025.11.5)  18 AUG 2026 00:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -741,24 +741,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 (./acl_latex.aux)
 \openout1 = `acl_latex.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 97.
-LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 73.
+LaTeX Font Info:    ... okay on input line 73.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -819,25 +819,25 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 97.
+Package hyperref Info: Link coloring ON on input line 73.
 (./acl_latex.out) (./acl_latex.out)
 \@outlinefile=\write4
 \openout4 = `acl_latex.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 97.
-Package microtype Info: Applying patch `item' on input line 97.
-Package microtype Info: Applying patch `toc' on input line 97.
-Package microtype Info: Applying patch `eqnum' on input line 97.
-Package microtype Info: Applying patch `footnote' on input line 97.
-Package microtype Info: Applying patch `verbatim' on input line 97.
-LaTeX Info: Redefining \microtypesetup on input line 97.
+LaTeX Info: Redefining \microtypecontext on input line 73.
+Package microtype Info: Applying patch `item' on input line 73.
+Package microtype Info: Applying patch `toc' on input line 73.
+Package microtype Info: Applying patch `eqnum' on input line 73.
+Package microtype Info: Applying patch `footnote' on input line 73.
+Package microtype Info: Applying patch `verbatim' on input line 73.
+LaTeX Info: Redefining \microtypesetup on input line 73.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 97.
+LaTeX Info: Redefining \showhyphens on input line 73.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -853,22 +853,36 @@ tim
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 98
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 74
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 74
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 12.0pt on input line 74.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `zi4' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
 
 
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-
-dist/fonts/enc/dvips/base/8r.enc}
+dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips
+/inconsolata/i4-t1-0.enc}
 
 
 
 ]
-Underfull \hbox (badness 2073) in paragraph at lines 115--116
+Underfull \hbox (badness 2073) in paragraph at lines 91--92
 []\T1/ptm/m/n/10.95 (+20) This find-ing res-onates with the in-flu-en-tial
  []
 
@@ -891,24 +905,15 @@ Underfull \hbox (badness 3271) in paragraph at lines 56--65
 
 
 
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 10
-2.
-(/usr/share/texlive/texmf-dist/tex/latex/inconsolata/t1zi4.fd
-File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
-)
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
 (Font)              scaled to size 10.0pt on input line 102.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `zi4' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
 )
-Underfull \hbox (badness 3108) in paragraph at lines 268--269
+Underfull \hbox (badness 3108) in paragraph at lines 244--245
 []\T1/ptm/m/n/9 (+20) - Sta-tus: [CLEAN / MIS-IN-FOR-MA-TION DE-
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 270--271
+Underfull \hbox (badness 1577) in paragraph at lines 246--247
 []\T1/ptm/m/n/9 (+20) - Mis-in-for-ma-tion Snip-pet: [Snip-pet Num-ber, or
  []
 
@@ -917,19 +922,19 @@ Underfull \vbox (badness 1997) has occurred while \output is active []
 
 
 
-[5{/usr/share/texlive/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]
+[5]
 LaTeX Info: Symbol \textrightarrow not provided by
             font family ptm in TS1 encoding.
-            Default family used instead on input line 302.
+            Default family used instead on input line 278.
 LaTeX Info: Symbol \textrightarrow not provided by
             font family ptm in TS1 encoding.
-            Default family used instead on input line 304.
+            Default family used instead on input line 280.
 LaTeX Info: Symbol \textrightarrow not provided by
             font family ptm in TS1 encoding.
-            Default family used instead on input line 336.
+            Default family used instead on input line 312.
 LaTeX Info: Symbol \textrightarrow not provided by
             font family ptm in TS1 encoding.
-            Default family used instead on input line 338.
+            Default family used instead on input line 314.
 
 
 
@@ -945,21 +950,17 @@ LaTeX Info: Symbol \textrightarrow not provided by
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `acl_latex.out' has not changed.
 (rerunfilecheck)             Checksum: F42F2F61A7C8D8ADB37DEC93BB3572A8;2974.
  ) 
 Here is how much of TeX's memory you used:
- 28566 strings out of 473197
- 555394 string characters out of 5718605
- 1006189 words of memory out of 5000000
- 50982 multiletter control sequences out of 15000+600000
- 619099 words of font info for 308 fonts, out of 8000000 for 9000
+ 28570 strings out of 473197
+ 555449 string characters out of 5718605
+ 1006018 words of memory out of 5000000
+ 50983 multiletter control sequences out of 15000+600000
+ 619537 words of font info for 311 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 98i,17n,101p,1368b,1045s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 98i,17n,101p,1413b,1045s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4
 r.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/
@@ -970,10 +971,10 @@ st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/publ
 ic/cm-super/sfrm0900.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/u
 tmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on acl_latex.pdf (7 pages, 157119 bytes).
+Output written on acl_latex.pdf (7 pages, 157324 bytes).
 PDF statistics:
  284 PDF objects out of 1000 (max. 8388607)
  250 compressed objects within 3 object streams
  48 named destinations out of 1000 (max. 500000)
- 59045 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 59557 words of extra memory for PDF output out of 61914 (max. 10000000)
 
