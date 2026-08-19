@@ -1,5 +1,5 @@
 <p align="center">
-🖋 <a href="https://arxiv.org/pdf/2608.17153" target="_blank">arxiv</a>
+🖋 <a href="https://arxiv.org/pdf/2608.17153" target="_blank">paper</a>
 </p>
 
 # Towards Safer RAG
