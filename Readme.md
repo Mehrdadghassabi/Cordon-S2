@@ -1,3 +1,7 @@
+<p align="center">
+🖋 <a href="https://arxiv.org/pdf/2608.17153" target="_blank">arxiv</a>
+</p>
+
 # Towards Safer RAG
 
 ## Only Agents Capable of System 2 Thinking May Access Untrusted Documents
