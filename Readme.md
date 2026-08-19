@@ -1,7 +1,6 @@
 <div align="center">
-  <img width="300" height="300" alt="logo_with_bg" src="https://github.com/user-attachments/assets/49573ed1-4fae-4c7a-a414-a995bcddda9c" />
+  <img width="300" height="300" alt="logo_with_bg" src="https://github.com/user-attachments/assets/cf9ff965-8091-488f-9275-8835252ecbf8" />
 </div>
-
 
 <p align="center">
 🖋 <a href="https://arxiv.org/pdf/2608.17153" target="_blank">paper</a>
