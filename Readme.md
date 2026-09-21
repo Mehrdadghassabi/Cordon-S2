@@ -116,7 +116,7 @@ Question → Correct answer → Contradictory sentence → 500-word passage
 
 ```bibtex
 @misc{ghassabi2026saferrag,
-  title         = {Towards Safer RAG: Only Agents Capable of System 2 Thinking may Access Untrusted Documents},
+  title         = {Reasoning Reduces the Influence of Poisoned Context in RAG},
   author        = {Ghassabi, Mehrdad and Ebrahimi, Audrina and Hakim, Sadra and Kashani, Hamidreza Baradaran},
   year          = {2026},
   eprint        = {2608.17153},
