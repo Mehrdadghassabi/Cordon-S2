@@ -302,7 +302,7 @@ If you use this repository or build upon this work, please cite the paper:
 ```bibtex
 @article{ghassabi2026reasoning,
   title={Reasoning Reduces the Influence of Poisoned Context in RAG},
-  author={Ghassabi, Mehrdad},
+  author={Ghassabi, Mehrdad and Ebrahimi, Audrina and Hakim, Sadra and Baradaran Kashani, Hamidreza},
   journal={arXiv preprint arXiv:2608.17153},
   year={2026}
 }
