@@ -1,127 +1,227 @@
 # Reasoning Reduces the Influence of Poisoned Context in RAG
 
-> [Paper (PDF)](https://arxiv.org/pdf/2608.17153)
+Research code and artifacts for:
 
----
+**Reasoning Reduces the Influence of Poisoned Context in RAG**
+
+📄 **Paper:** https://arxiv.org/abs/2608.17153
 
 ## Overview
 
-Retrieval-Augmented Generation (RAG) systems ground LLM outputs in external documents — but this opens a vulnerability: **knowledge-poisoning attacks**, where adversarial text injected into retrieved passages can steer model responses.
+Retrieval-Augmented Generation (RAG) grounds language-model responses in retrieved evidence, but retrieved documents can contain deliberately injected misinformation. A model may detect that a retrieved passage is misleading while still allowing that passage to influence its final answer.
 
-This paper asks: **can deliberative reasoning reduce a model's susceptibility to poisoned evidence, even without architectural defenses?**
+This work studies whether **deliberative reasoning reduces the influence of poisoned context** when models have direct access to untrusted retrieved evidence.
 
-The answer is yes — but with a twist. Enabling reasoning:
-- **Reduces** the behavioral influence of detected poison (lower Cordon Rate and Leakage Rate)
-- **Increases** overall attack success (lower Poison Detection Rate)
+Rather than proposing a new isolation-based defense, we empirically examine the relationship between:
 
-This reveals that **poison detection and resistance to poisoning are distinct capabilities**, motivating multi-dimensional evaluation of RAG robustness.
+* detection of poisoned evidence,
+* attack success,
+* and the model's susceptibility to contextual influence.
 
----
+The experiments distinguish **detecting misinformation** from **resisting its influence**.
 
-## Key Concepts
+## Main Findings
 
-### Cordon Rate (CR)
-The probability that a model's final answer is influenced by a poisoned document **despite the model having detected it as misinformation**.
+On the main SciFact experiment, reasoning reduces both Leakage Rate (LR) and Cordon Rate (CR) for DeepSeek-V4-Flash and Qwen3.6-Plus.
 
-```
-CR = P(influenced | poison_detected ∧ no-RAG_answer_not_poison-aligned)
-```
+| Model             | Reasoning |    LR |    CR |
+| ----------------- | --------: | ----: | ----: |
+| DeepSeek-V4-Flash |       Off | 0.235 | 0.211 |
+| DeepSeek-V4-Flash |        On | 0.140 | 0.107 |
+| Qwen3.6-Plus      |       Off | 0.240 | 0.058 |
+| Qwen3.6-Plus      |        On | 0.170 | 0.011 |
 
-A CR of 0 is the ideal — a model that detects misinformation should fully exclude it from its answer.
+At the same time, reasoning changes detection and attack-success behavior:
 
-### Leakage Rate (LR)
-The probability that a model is influenced by a poisoned document **even when explicitly instructed to ignore all retrieved context**.
+| Model             | Reasoning |   ASR |   PDR |
+| ----------------- | --------: | ----: | ----: |
+| DeepSeek-V4-Flash |       Off | 0.233 | 0.965 |
+| DeepSeek-V4-Flash |        On | 0.298 | 0.665 |
+| Qwen3.6-Plus      |       Off | 0.133 | 0.830 |
+| Qwen3.6-Plus      |        On | 0.279 | 0.500 |
 
-```
-LR = P(influenced_by_ignore_condition ∧ no-RAG_answer_not_poison-aligned)
-```
-
-An LR of 0 is the ideal — explicit top-down instructions to disregard context should be followed completely.
-
-Both metrics have a natural zero reference point (trivially achievable by construction), making them useful for comparing model behavior against an idealized reliable agent.
-
----
-
-## Results
-
-### Effect of Enabling Reasoning (SciFact, n=200)
-
-| Model | Reasoning | Leakage Rate | Cordon Rate |
-|---|---|---|---|
-| DeepSeek-V4-Flash | Off | 0.235 | 0.211 |
-| DeepSeek-V4-Flash | **On** | **0.140** | **0.107** |
-| Qwen3.6-Plus | Off | 0.240 | 0.058 |
-| Qwen3.6-Plus | **On** | **0.170** | **0.011** |
-
-Enabling reasoning reduces Cordon Rate by **~49%** (DeepSeek) and **~81%** (Qwen), and Leakage Rate by **~40%** (DeepSeek) and **~29%** (Qwen).
-
-### Detection vs. Resistance (SciFact, n=200)
-
-| Model | Reasoning | Attack Success Rate | Poison Detection Rate |
-|---|---|---|---|
-| DeepSeek-V4-Flash | Off | 0.233 | 0.965 |
-| DeepSeek-V4-Flash | On | 0.298 | 0.665 |
-| Qwen3.6-Plus | Off | 0.133 | 0.830 |
-| Qwen3.6-Plus | On | 0.279 | 0.500 |
-
-Higher reasoning → **worse** at detecting poison explicitly, yet **better** at not being behaviorally influenced by it. Detection and resistance are decoupled.
-
-### Cross-Model Comparison (Claude, SciFact, n=200)
-
-| Model | ASR | Leakage Rate | Cordon Rate |
-|---|---|---|---|
-| Claude Haiku 4.5 (reasoning off) | 0.280 | 0.245 | 0.220 |
-| Claude Sonnet 4.6 (reasoning on) | **0.080** | **0.093** | **0.069** |
-
-Consistent pattern, though the models also differ in capability — this comparison is treated as supporting rather than causal evidence.
-
----
+These results illustrate that **poison detection and resistance to contextual influence are distinct properties**. In these experiments, reasoning lowers measured contextual influence even though poison detection decreases and attack success increases.
 
 ## Research Questions
 
-| RQ | Question | Finding |
-|---|---|---|
-| **RQ1** | Does reasoning reduce poisoned-context influence? | Yes — both CR and LR drop substantially when reasoning is enabled. |
-| **RQ2** | Does poison detection predict poison resistance? | No — detection and resistance are distinct; enabling reasoning improves one while hurting the other. |
-| **RQ3** | Does the pattern extend across model families? | Yes — the Claude Haiku/Sonnet comparison is consistent with within-model results. |
-| **RQ4** | Does susceptibility vary across datasets? | Yes — SciFact shows clear susceptibility; FiQA and MS MARCO near-zero (limited sample). |
+### RQ1 — Effect of reasoning
 
----
+**Does reasoning reduce the influence of poisoned context?**
+
+For both DeepSeek-V4-Flash and Qwen3.6-Plus, reasoning reduces both LR and CR on the main SciFact evaluation.
+
+### RQ2 — Detection versus resistance
+
+**Does detecting poisoned evidence imply resistance to its influence?**
+
+The results indicate that these properties can diverge. Detection alone does not fully characterize whether poisoned evidence affects the final answer.
+
+### RQ3 — Cross-model comparison
+
+**Does the reduction extend across different model families?**
+
+A supporting comparison uses Claude Haiku 4.5 without reasoning and Claude Sonnet 4.6 with maximum reasoning effort.
+
+| Model             | Reasoning |   ASR |    LR |    CR |
+| ----------------- | --------: | ----: | ----: | ----: |
+| Claude Haiku 4.5  |       Off | 0.280 | 0.245 | 0.220 |
+| Claude Sonnet 4.6 |        On | 0.080 | 0.093 | 0.069 |
+
+This comparison is **supporting rather than causal**, because the models and reasoning configurations differ simultaneously.
+
+### RQ4 — Dataset and question variation
+
+**Does susceptibility to contextual influence vary across datasets and questions?**
+
+Additional exploratory experiments use the first 40 questions from FiQA and the first 40 questions from MS MARCO.
+
+For DeepSeek-V4-Flash, both reasoning settings produced zero LR and CR across MS MARCO and across all but one FiQA question. The remaining FiQA case exhibited a leakage rate of 1.
+
+## Metrics
+
+### Cordon Rate (CR)
+
+Cordon Rate measures poison-aligned behavior among cases where the model detects the poisoned evidence, while excluding cases where the no-RAG answer is already poison-aligned:
+
+```text
+CR = P(poison-aligned(M_RAG)
+       | detected(M_RAG) ∧ ¬poison-aligned(M_no-RAG))
+```
+
+### Leakage Rate (LR)
+
+Leakage Rate measures cases in which poisoned retrieved context influences the model despite an instruction to ignore the retrieved documents:
+
+```text
+LR = P(poison-aligned(M_ignore)
+       ∧ ¬poison-aligned(M_no-RAG))
+```
+
+### Attack Success Rate (ASR)
+
+ASR measures the overall rate at which the poisoning attack produces a poison-aligned answer.
+
+### Poison Detection Rate (PDR)
+
+PDR measures the rate at which the model correctly identifies the poisoned evidence.
 
 ## Experimental Setup
 
-- **Dataset:** 200 randomly sampled SciFact questions (seed 38), plus 40 questions each from FiQA and MS MARCO (exploratory)
-- **Target models:** DeepSeek-V4-Flash, Qwen3.6-Plus (reasoning on/off), Claude Haiku 4.5, Claude Sonnet 4.6
-- **Judge model:** Gemini 2.5 Pro
-- **Poison generation:** GPT-5.6 (with Grok 4.6 as fallback); each poison is a ~500-word authoritative-sounding passage contradicting the correct answer
-- **Inference settings:** Provider-recommended defaults via official APIs (as of early September 2026)
+### Main evaluation
 
-### Poison Generation Pipeline
+* **Dataset:** SciFact
+* **Sample:** 200 randomly selected questions
+* **Random seed:** 38
+* **Main models:** DeepSeek-V4-Flash and Qwen3.6-Plus
+* **Reasoning:** within-model reasoning on/off comparisons
+* **Judge model:** Gemini 2.5 Pro
+* **Poison generation:** GPT-5.6
+* **Fallback poison generator:** Grok 4.6 when GPT-5.6 refused generation
+* **Model settings:** provider-recommended settings
 
-```
-Question → Correct answer → Contradictory sentence → 500-word passage
-                                                          ↓
-                                         Judge verifies passage contradicts answer
-                                         (retry if it doesn't)
-```
+### Additional evaluation
 
----
+* **FiQA:** first 40 questions
+* **MS MARCO:** first 40 questions
+
+These experiments are exploratory and examine variation across datasets and questions.
+
+## Evaluation Conditions
+
+The experiments use three principal conditions.
+
+### RAG
+
+The model receives the question together with retrieved documents containing the poisoned passage. The model is instructed to reason about the context, check for misinformation, and provide a final answer.
+
+### No-RAG
+
+The model receives the question without retrieved documents. This provides the baseline used to identify cases where the model is already aligned with the poisoning direction without access to the retrieved context.
+
+### Ignore-context
+
+The model receives the retrieved documents but is explicitly instructed to ignore them and rely on its parametric knowledge.
+
+This condition is used to measure **Leakage Rate**, capturing influence from retrieved context despite the instruction to ignore it.
 
 ## Repository Structure
 
+```text
+Cordon-S2/
+├── src/
+├── evaluation/
+├── poisons/
+├── doc/
+└── README.md
+```
 
----
+## Reproducibility
+
+The main experimental configuration is:
+
+| Component                  | Setting                         |
+| -------------------------- | ------------------------------- |
+| Main dataset               | SciFact                         |
+| Main sample size           | 200                             |
+| Random seed                | 38                              |
+| Main model comparisons     | DeepSeek-V4-Flash, Qwen3.6-Plus |
+| Reasoning comparison       | Off vs. On                      |
+| Judge                      | Gemini 2.5 Pro                  |
+| Poison generation          | GPT-5.6                         |
+| Poison-generation fallback | Grok 4.6                        |
+| Additional datasets        | FiQA, MS MARCO                  |
+
+Because the experiments use proprietary model APIs, exact outputs may vary as model providers update their systems.
+
+## Interpreting the Results
+
+The central distinction of this work is:
+
+```text
+Detection ≠ Attack Success ≠ Contextual Influence
+```
+
+A model can detect a poisoned passage without necessarily being resistant to its influence. Conversely, changes in attack success do not by themselves fully describe how poisoned context affects model behavior.
+
+The reasoning experiments therefore evaluate contextual influence separately through CR and LR.
+
+In particular, the main experiments show cases where reasoning is associated with:
+
+* lower poison detection,
+* higher attack success rate,
+* but lower measured contextual influence.
+
+This motivates treating **detection** and **resistance to contextual influence** as separate evaluation dimensions.
+
+## Limitations
+
+* The main evaluation contains 200 SciFact questions.
+* The FiQA and MS MARCO experiments use 40 questions each and are exploratory.
+* The experiments rely primarily on proprietary models and APIs.
+* Reasoning is used as an operational proxy for deliberative reasoning; it should not be interpreted as a literal implementation of human System 2 cognition.
+* Poisoned passages are generated synthetically.
+* Automated judging introduces potential evaluation error.
+* The Claude comparison is not a controlled within-model causal comparison because model family and reasoning configuration differ.
+* Dataset-level differences are observed empirically but are not sufficient to establish why susceptibility varies across datasets or individual questions.
+
+## Relation to Prior Work
+
+This work builds on research showing that models can detect misinformation in retrieved evidence while still being influenced by that evidence.
+
+It is also related to the **Cordon Principle**, which restricts the final-answer agent's access to raw retrieved evidence. The present work does not propose replacing such isolation-based approaches. Instead, it studies whether reasoning-enabled models can interact directly with untrusted evidence while exhibiting reduced contextual influence.
 
 ## Citation
 
+If you use this work, please cite:
+
 ```bibtex
-@misc{ghassabi2026saferrag,
-  title         = {Reasoning Reduces the Influence of Poisoned Context in RAG},
-  author        = {Ghassabi, Mehrdad and Ebrahimi, Audrina and Hakim, Sadra and Kashani, Hamidreza Baradaran},
-  year          = {2026},
-  eprint        = {2608.17153},
+@misc{ghassabi2026reasoning,
+  title = {Reasoning Reduces the Influence of Poisoned Context in RAG},
+  author = {Ghassabi, Mehrdad and Ebrahimi, Audrina and Hakim, Sadra and Baradaran Kashani, Hamidreza},
+  year = {2026},
+  eprint = {2608.17153},
   archivePrefix = {arXiv},
-  primaryClass  = {cs.CL},
-  url           = {https://arxiv.org/abs/2608.17153}
+  primaryClass = {cs.CL},
+  url = {https://arxiv.org/abs/2608.17153}
 }
 ```
