@@ -272,18 +272,3 @@ The repository provides:
 | End-to-end experimental workflow | Yes |
 
 Thus, the repository provides both the **executable workflow for rerunning the experiments** and the **fixed experimental artifacts needed to independently verify the reported results without additional API calls**.
-
----
-
-# Citation
-
-If you use this repository or build upon this work, please cite the paper:
-
-```bibtex
-@article{ghassabi2026detection,
-  title={When Detection Does Not Guarantee Resistance: Reasoning and Poisoned Context in RAG},
-  author={Ghassabi, Mehrdad and Ebrahimi, Audrina and Hakim, Sadra and Zojaji, Zahra and Baradaran Kashani, Hamidreza and Milani Fard, Amin},
-  journal={arXiv preprint arXiv:2608.17153},
-  year={2026}
-}
-```
