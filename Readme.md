@@ -6,8 +6,6 @@ This repository contains the code, experimental artifacts, and paper sources for
 
 The paper studies whether reasoning-enabled language models are less influenced by misinformation contained in retrieved documents in Retrieval-Augmented Generation (RAG).
 
-**Paper:** [arXiv:2608.17153](https://arxiv.org/abs/2608.17153) (v4, last revised 30 Sep 2026)
-
 ---
 
 ## Overview
